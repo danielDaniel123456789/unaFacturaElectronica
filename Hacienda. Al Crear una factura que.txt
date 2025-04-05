@@ -1,0 +1,5 @@
+Hacienda. Al Crear una factura que se pueda seleccionar entre
+* Proforma
+* Nota Crédito 
+* Tickets
+* Factura Electrónica

@@ -1,0 +1,55 @@
+#puzzle-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 2px;
+    margin-top: 60px;
+    position: absolute;
+   
+    
+}
+.puzzle-piece {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    font-family: Arial, sans-serif; /* Agregado Arial */
+    cursor: grab;
+    user-select: none;
+    font-weight: 600;
+}
+#textoEspayolAgregar {
+
+  
+    margin-top: 440px;
+    position: absolute;
+    font-family: 'Arial';
+    left: 0px;
+}
+
+#imagePuzzleContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 2px;
+    margin-top: 20px;
+    position: absolute;
+    /*opacity: 0.5;*/
+}
+.image-piece {
+    width: 100px;
+    height: 100px;
+    cursor: grab;
+    position: relative;
+    z-index: -1;
+}
+.image-piece .text-overlay {
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}

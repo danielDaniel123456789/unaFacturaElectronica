@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardar y Cargar HTML</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <div id="contenido" class="mt-3">
+        <div class="card p-4">
+            <h1 class="text-center">Ejemplo02 de Guardar y Cargar HTML desde localStorage</h1>
+            <p>Este es un contenido que se puede guardar y cargar.</p>
+        </div>
+        
+        <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-primary mx-2" onclick="guardarYcargarHTML()">Guardar y Cargar HTML</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const contenidoGuardado = localStorage.getItem("paginaHTML");
+            if (contenidoGuardado) {
+                if (confirm("Se ha encontrado contenido guardado. ¿Desea cargarlo?")) {
+                    document.getElementById("contenido").innerHTML = contenidoGuardado;
+                }
+            }
+        });
+
+        function guardarYcargarHTML() {
+            const contenidoHTML = document.getElementById("contenido").innerHTML;
+            localStorage.setItem("paginaHTML", contenidoHTML);
+            alert("HTML guardado en localStorage.");
+            
+            // Cargar inmediatamente después de guardar
+            const nuevoContenidoHTML = localStorage.getItem("paginaHTML");
+            if (nuevoContenidoHTML) {
+                document.getElementById("contenido").innerHTML = nuevoContenidoHTML;
+            }
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+* Proforma: es una ticket no fiscal, se usa para salida interna, como los pedidos, queda como una especie de borrador.
+* Tickets: Es un documento fiscal, tributa pero sin datos, por ejemplo cuando vas a una panadería o cafeteria que no se requiere factura con datos
+* Nota de Crédito: se usa para modificar el saldo de una factura fiscal

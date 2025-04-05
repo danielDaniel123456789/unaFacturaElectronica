@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rompecabezas de Imagen y Texto</title>
+   <link rel="stylesheet" href="style.css">
+
+   <script src="colorTexto.js"></script>
+   <script src="textpEspayol.js"></script>
+   <script src="createTextPuzzle.js"></script>
+</head>
+<body>
+    <textarea id="textInput" placeholder="Ingresa el texto aquí..." rows="4" cols="30"></textarea>
+    <button id="generateTextPuzzle">Generar Rompecabezas de Texto</button>
+    <input type="file" id="imageLoader" accept="image/*">
+    <canvas id="imageCanvas" style="display: none;"></canvas>
+    <button id="generateImagePuzzle">Generar Rompecabezas de Imagen</button>
+    <input type="color" id="colorPicker" value="#000000">
+    <button onclick="colorTexto()">Cambiar Color del Texto</button>
+
+    <input type="text" id="textpEspayol">
+    <button onclick="textpEspayol()">textpEspayol</button>
+    <div id="textoEspayolAgregar"></div>
+
+    <h3>Rompecabezas de Texto</h3>
+    <div id="puzzle-container"></div>
+
+    <h3>Rompecabezas de Imagen</h3>
+    <div id="imagePuzzleContainer"></div>
+
+
+    <div id="textoEspayolAgregar"></div>
+
+    <script>
+        // Generar rompecabezas de texto
+        document.getElementById('generateTextPuzzle').addEventListener('click', function() {
+            const text = document.getElementById('textInput').value.trim();
+            if (text) {
+                createTextPuzzle(text);
+            } else {
+                alert("Por favor, ingresa algún texto.");
+            }
+        });
+
+       
+        // Arrastrar piezas
+        let draggedItem = null;
+
+        function dragStart(e) {
+            draggedItem = e.target;
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            if (draggedItem !== e.target) {
+                const tempText = e.target.textContent;
+                e.target.textContent = draggedItem.textContent;
+                draggedItem.textContent = tempText;
+            }
+        }
+
+        // Cargar imagen y generar rompecabezas de imagen
+        document.getElementById('generateImagePuzzle').addEventListener('click', function() {
+            const file = document.getElementById('imageLoader').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    createImagePuzzle(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Por favor, selecciona una imagen.");
+            }
+        });
+
+        function createImagePuzzle(imgSrc) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.getElementById('imageCanvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 300;
+                canvas.height = 300;
+                ctx.drawImage(img, 0, 0, 300, 300);
+                generateImagePieces(ctx);
+            };
+            img.src = imgSrc;
+        }
+
+        function generateImagePieces(ctx) {
+            const puzzleContainer = document.getElementById('imagePuzzleContainer');
+            puzzleContainer.innerHTML = '';
+            let pieces = [];
+            for (let y = 0; y < 3; y++) {
+                for (let x = 0; x < 3; x++) {
+                    const pieceCanvas = document.createElement('canvas');
+                    pieceCanvas.width = pieceCanvas.height = 100;
+                    const pieceCtx = pieceCanvas.getContext('2d');
+                    pieceCtx.drawImage(ctx.canvas, x * 100, y * 100, 100, 100, 0, 0, 100, 100);
+
+                    const piece = document.createElement('div');
+                    piece.classList.add('image-piece');
+                    piece.style.backgroundImage = `url(${pieceCanvas.toDataURL()})`;
+
+                    const textOverlay = document.createElement('div');
+                    textOverlay.classList.add('text-overlay');
+                    textOverlay.textContent = `${y * 3 + x + 1}`;
+                    piece.appendChild(textOverlay);
+
+                    piece.draggable = true;
+                    piece.dataset.index = y * 3 + x;
+                    pieces.push(piece);
+                }
+            }
+            pieces.forEach(piece => puzzleContainer.appendChild(piece));
+
+            pieces.forEach(piece => {
+                piece.addEventListener('dragstart', dragStart);
+                piece.addEventListener('dragover', dragOver);
+                piece.addEventListener('drop', drop);
+            });
+        }
+    </script>
+</body>
+</html>

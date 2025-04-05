@@ -1,0 +1,36 @@
+Sí, se puede hacer mediante la API de ATV 
+(Administración Tributaria Virtual) de Hacienda en Costa Rica. La API permite la creación, envío y validación de facturas electrónicas.
+
+Pasos para crear una factura en Hacienda mediante la API
+Obtener credenciales
+
+La persona debe contar con un usuario y contraseña de ATV.
+
+Se necesita un certificado digital (clave criptográfica) para firmar la factura.
+
+Generar el XML de la factura
+
+Se debe estructurar el XML con la información requerida según la normativa de Hacienda (clave numérica, emisor, receptor, detalle de productos/servicios, impuestos, etc.).
+
+Hacienda tiene un esquema XSD para validar la estructura del XML.
+
+Firmar el XML
+
+Se usa un certificado digital para firmar electrónicamente el documento antes de enviarlo a Hacienda.
+
+Enviar la factura a la API de Hacienda
+
+Se hace una solicitud POST a la API de Hacienda, enviando el XML firmado.
+
+La API responde con un estado (recibido, en proceso, aceptado o rechazado).
+
+Consultar el estado de la factura
+
+Se consulta la API para verificar si la factura fue aceptada o rechazada.
+
+Si fue aceptada, se puede enviar al cliente.
+
+¿Cómo ingresar por medio de una API?
+Si ya tienes una API propia, puedes hacer que tu sistema se conecte con la API de Hacienda para automatizar el proceso de facturación.
+
+¿Quieres ayuda con la implementación técnica? 🚀
